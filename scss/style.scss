@@ -1,0 +1,117 @@
+:root {
+  --index: calc(1vw + 1vh);
+  --gutter: 30px;
+  --side-small: 26;
+  --side-big: 36;
+  --depth: 4000px;
+  --transition: cubic-bezier(0.265, 0.49, 0.78, 1.075);
+}
+@font-face {
+  font-family: raleway_c;
+  src: url(../fonts/raleway-v22-cyrillic-300.woff2);
+  font-weight: 300;
+}
+@font-face {
+  font-family: raleway_c;
+  src: url(../fonts/raleway-v22-cyrillic-100.woff2);
+  font-weight: 100;
+}
+body {
+  font-weight: 300;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-size: calc(
+    var(--index) * 0.8
+  ); //размер шрифта будет пропорцианален разрешению дисплея
+  font-family: raleway_c, sans-serif;
+  line-height: 1.75;
+  height: var(--depth);
+}
+.container {
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  perspective: 1500px; //обезательное свойство при работе с транформацией по оси z. Задайтся самому главному родительскому элементу
+}
+.gallery {
+  transform-style: preserve-3d; // Свойство необходимо для передачи свойства perspective от родительского элемента к дочерним. Если дочернии элементы подверженные трансормации находятся через не срауз в родительском элементе, а через один. как тут
+  height: 100%;
+}
+.frame {
+  transition: var(--transition) 0.4s;
+  width: 100%;
+  transform-style: preserve-3d; // в данном случае это свойство помогает не размывать тект при его увеличении на анимации
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform; // штука которая позволяет задействовсть ПК больше аппаратных ресурсов, для выбранного свойства и исключить фризы
+  h2 {
+    text-align: center;
+    line-height: 1;
+    font-size: calc(var(--index) * 5);
+    width: min-content; // ширина вычисляется по ширине самого длинного слова в контейнере
+  }
+}
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 100;
+  text-transform: uppercase;
+  width: min-content;
+  line-height: 1;
+  margin: 0;
+}
+.frame-media {
+  position: relative;
+  width: calc(var(--index) * var(--side-small));
+  height: calc(var(--index) * var(--side-big));
+  background-position: center;
+  background-size: cover;
+}
+.frame-media__left {
+  right: calc(var(--side-small) / 2 * var(--index) + var(--gutter));
+}
+.frame-media__right {
+  left: calc(var(--side-small) / 2 * var(--index) + var(--gutter));
+}
+.frame__bg {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+video.frame-media {
+  width: calc(var(--index) * var(--side-big));
+  height: calc(var(--index) * var(--side-small));
+}
+video.frame-media_right {
+  left: calc(var(--side-big) / 2 * var(--index) + var(--gutter));
+}
+video.frame-media_left {
+  right: calc(var(--side-big) / 2 * var(--index) + var(--gutter));
+}
+.text_left>*{
+position: relative;
+right: 18vw;
+}
+.frame h3{
+    font-size: calc(var(--index)*3);
+}
+.frame p{
+    max-width: 30vw;
+}
+.text_right>*{
+    position: relative;
+    left: 18vw;
+}
+.soundbutton{
+    position: fixed;
+    bottom: 5vh;
+    right: 5vw;
+    cursor: pointer;
+    width: 24px;
+transition: .3s;
+}
+.soundbutton.paused{
+    opacity: 0.5;
+}
